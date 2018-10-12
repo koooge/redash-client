@@ -1,5 +1,7 @@
 'use strict';
 
+const path = require('path');
+
 const axios = require('axios');
 const delay = require('delay');
 
@@ -23,6 +25,15 @@ class RedashClient {
         [authHeaderName]: `Key ${apiToken}`,
       },
     });
+  }
+
+  /**
+   * @param {number} id
+   * @return {Promise<Query>}
+   */
+  getDataSources(id) {
+		const resource = path.normalize(`api/data_sources/${id}`);
+    return this.axios_.get(resource).then(resp => resp.data);
   }
 
   /**
